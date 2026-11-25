@@ -1,0 +1,2 @@
+# Included as source under app/vendor for the portable Windows release.
+mutagen==1.47.0

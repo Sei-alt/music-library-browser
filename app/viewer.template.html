@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>音楽一覧</title>
+<style>
+:root{color-scheme:light;--bg:#f5f7fa;--surface:#ffffff;--raised:#ffffff;--line:#bac7d5;--text:#182335;--muted:#53657a;--accent:#175da0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.6 "Segoe UI","Yu Gothic UI",Meiryo,system-ui,sans-serif}body.has-player{padding-bottom:150px}button,input,select{font:inherit}button,input,select{border:1px solid var(--line);border-radius:9px;background:var(--raised);color:var(--text)}button{padding:9px 14px;cursor:pointer;transition:background .15s,border-color .15s}button:hover:not(:disabled){background:#edf2f8;border-color:#899db5}button:disabled{opacity:.35;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}input,select{padding:11px 13px}input::placeholder{color:#79899b}a{color:var(--accent)}[hidden]{display:none!important}.library{max-width:1600px;margin:0 auto;padding:38px 32px 30px}.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:26px}.eyebrow{margin:0 0 4px;color:var(--accent);font-size:11px;font-weight:650;letter-spacing:.18em}h1{margin:0;font-size:32px;font-weight:650;letter-spacing:.03em}#stats{margin:0 0 3px;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}.search{position:relative;flex:1;min-width:240px}.search svg{position:absolute;top:15px;left:13px;color:var(--muted);pointer-events:none}#q{width:100%;padding-left:40px;background:var(--bg)}.size-label{display:flex;align-items:center;gap:8px;color:var(--muted);white-space:nowrap}#size{width:83px}.hint{color:var(--muted);font-size:12px;margin:13px 2px 20px}.table-wrap{border:1px solid var(--line);border-radius:14px;overflow-x:auto;background:var(--surface)}table{width:100%;border-collapse:collapse;table-layout:auto;min-width:930px}th,td{text-align:left;border-bottom:1px solid #e1e7ef}th{padding:13px 16px;background:#e6edf5;color:#53657a;font-size:12px;font-weight:600;white-space:nowrap}th button{padding:0;border:0;border-radius:3px;background:transparent;color:inherit;font:inherit;white-space:nowrap}th button:hover:not(:disabled){background:transparent;color:var(--text)}td{padding:12px 16px;vertical-align:middle}th:first-child,td:first-child{width:84px}td:nth-child(2){font-weight:550}td:nth-child(3),td:nth-child(4){color:#53657a}td:nth-child(5){white-space:nowrap;color:#53657a;font-variant-numeric:tabular-nums}td:last-child{width:310px}tbody tr{transition:background .15s}tbody tr:hover{background:#f5f8fb}tbody tr.is-current{background:#e8f0f8}tbody tr:last-child td{border-bottom:0}.cover,.nocover{display:block;width:52px;height:52px;border-radius:7px;object-fit:cover;background:#eef2f7}.nocover{display:grid;place-items:center;color:#79899b;font-size:25px}.actions{display:flex;gap:8px;align-items:center;flex-wrap:nowrap}.actions button{font-size:12px;padding:8px 10px;white-space:nowrap;min-height:35px}.actions .play-button{color:#ffffff;background:var(--accent);border-color:var(--accent);font-weight:650}.actions .play-button:hover{background:#124d85;border-color:#124d85}.reveal-button{background:transparent;color:#175da0}.pages{display:flex;gap:14px;align-items:center;justify-content:flex-end;margin-top:18px}#page{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}.empty{text-align:center!important;color:var(--muted)!important;padding:48px!important;font-weight:400!important}.player{position:fixed;z-index:10;bottom:0;left:0;right:0;display:grid;grid-template-columns:72px minmax(170px,1fr) minmax(280px,1.6fr);align-items:center;gap:20px;padding:18px max(24px,calc((100vw - 1536px)/2));background:#e6edf5;border-top:1px solid #bac7d5;box-shadow:0 -8px 30px #0001;backdrop-filter:blur(18px)}.player-art{width:72px;height:72px;position:relative;border-radius:50%;background:#eef2f7;border:3px solid #bac7d5;box-shadow:0 2px 12px #0002;overflow:hidden;animation:record-turn 12s linear infinite;animation-play-state:paused}.player-art img{display:block;width:100%;height:100%;object-fit:cover}.player-art::after{content:"";position:absolute;top:50%;left:50%;width:12px;height:12px;transform:translate(-50%,-50%);border:3px solid #ffffff;border-radius:50%;background:#53657a;box-shadow:0 0 0 3px #0002}.player.is-playing .player-art.has-cover{animation-play-state:running}.player-art-fallback{height:100%;display:grid;place-items:center;font-size:27px;color:#79899b}.player-art:not(.has-cover)::after{display:none}.track-info{min-width:0}.now-label{margin:0 0 3px;font-size:10px;letter-spacing:.13em;font-weight:650;color:var(--accent)}#playing{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#playingMeta{display:block;font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#audioStatus{display:block;font-size:11px;color:var(--muted);min-height:18px}.player-controls{min-width:0}.player audio{width:100%;display:block;height:44px;border-radius:24px;color-scheme:light}#audioStatus.error{color:#b03532}@keyframes record-turn{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}.player-art{animation:none}}@media(max-width:900px){.library{padding:26px 20px}.heading{align-items:flex-start;flex-direction:column;gap:10px}h1{font-size:28px}.player{grid-template-columns:60px minmax(140px,1fr) minmax(230px,1.2fr);gap:14px;padding:16px 20px}.player-art{width:60px;height:60px}}@media(max-width:640px){.library{padding:22px 14px}.toolbar{padding:12px;gap:9px}.search{flex-basis:100%}.toolbar select{flex:1;min-width:0}.size-label{font-size:12px}#size{width:65px;padding:11px 8px}.hint{line-height:1.8}.player{grid-template-columns:52px minmax(0,1fr);gap:9px 14px;padding:12px 16px}.player-art{width:52px;height:52px}.player-controls{grid-column:1/-1}.player audio{height:40px}body.has-player{padding-bottom:185px}.pages{justify-content:center}#playing{font-size:14px}}
+.player-art{display:block}.cover-button{display:block;padding:0;border:0;background:transparent;border-radius:7px;cursor:zoom-in}.cover-button:hover:not(:disabled){background:transparent;box-shadow:0 0 0 3px #175da026}.player-art-button{display:block;padding:0;border:0;background:transparent;border-radius:50%;cursor:zoom-in}.player-art-button:hover:not(:disabled){background:transparent;box-shadow:0 0 0 3px #175da026}body[data-art-shape="square"] .player-art{border-radius:8px;border:0;animation:none}body[data-art-shape="square"] .player-art::after{display:none}body[data-art-shape="square"] .player-art-button{border-radius:8px}body.art-view-open{overflow:hidden}
+.art-view{position:fixed;inset:0;width:100%;height:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#f5f7fa;color:var(--text);overflow:hidden;isolation:isolate}.art-view[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto}.art-view::backdrop{background:#f5f7fa}.art-backdrop{position:absolute;z-index:-2;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(60px);opacity:.26;pointer-events:none}.art-view::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(#f5f7facc,#f5f7fa44 45%,#f5f7faee);pointer-events:none}.art-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 30px}.art-back{background:#ffffffb8;backdrop-filter:blur(12px);white-space:nowrap}.art-shape-controls{display:flex;gap:4px;padding:4px;border:1px solid #bac7d580;border-radius:12px;background:#ffffffb8;backdrop-filter:blur(12px)}.art-shape-controls button{padding:8px 13px;border-color:transparent;background:transparent;font-size:13px;white-space:nowrap}.art-shape-controls button[aria-pressed="true"]{background:var(--accent);color:white;box-shadow:0 2px 6px #175da01a}.art-body{display:grid;place-items:center;min-height:0;padding:8px 24px 24px}.large-art{position:relative;width:min(66vh,72vw,780px);width:min(66dvh,72vw,780px);max-height:100%;aspect-ratio:1;border:6px solid #e6edf5;border-radius:50%;background:linear-gradient(145deg,#ffffff,#dce7f1);overflow:hidden;box-shadow:0 24px 64px #18233526,0 0 0 1px #ffffff;animation:record-turn 12s linear infinite;animation-play-state:paused}.large-art img{display:block;width:100%;height:100%;object-fit:cover}.large-art::after{content:"";position:absolute;left:50%;top:50%;width:6%;height:6%;transform:translate(-50%,-50%);border:clamp(4px,1vw,10px) solid #f6f8fb;border-radius:50%;background:#a8b7c6;box-shadow:0 0 0 9px #ffffff70,0 2px 8px #18233530}.large-art:not(.has-cover)::after{display:none}.large-art-fallback{height:100%;display:grid;place-items:center;font-size:clamp(70px,16vw,180px);color:#8498ac}.art-view.is-playing .large-art.has-cover{animation-play-state:running}body[data-art-shape="square"] .large-art{animation:none;border:1px solid #ffffffb3;border-radius:12px}body[data-art-shape="square"] .large-art::after{display:none}.art-footer{width:min(800px,100%);margin:0 auto;padding:0 30px 28px;text-align:center}.art-title{margin:0;font-size:clamp(18px,2.6vw,28px);font-weight:650;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.art-meta{margin:6px 0 12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.art-transport{display:flex;align-items:center;gap:15px}.art-toggle{min-width:106px;background:var(--accent);color:white;border-color:var(--accent);font-weight:600}.art-toggle:hover:not(:disabled){background:#124d85;border-color:#124d85}.art-seek{flex:1;min-width:0;width:auto;accent-color:var(--accent);padding:0;cursor:pointer}.art-time{font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}.art-status{display:block;font-size:11px;color:var(--muted);min-height:18px;margin-top:9px}.art-status.error{color:#b03532}@media(prefers-reduced-motion:reduce){.large-art{animation:none}}@media(max-width:640px){.art-header{padding:14px;gap:8px;flex-wrap:wrap}.art-shape-controls{margin-left:auto}.art-shape-controls button{font-size:12px;padding:7px 8px}.art-back{padding:8px 10px;font-size:12px}.art-body{padding:10px 20px 20px}.large-art{width:min(62dvh,82vw)}.art-footer{padding:0 20px 20px}.art-meta{font-size:12px}.art-transport{gap:10px;flex-wrap:wrap}.art-toggle{min-width:92px;font-size:13px}.art-time{font-size:11px}.art-seek{order:3;flex-basis:100%}.art-time{margin-left:auto}}
+.art-body{container-type:size}.large-art{width:min(60dvh,72vw,780px,calc(100dvh - 340px));max-height:none}@supports(width:1cqh){.large-art{width:min(100cqw,100cqh,780px)}}.art-volume{display:flex;align-items:center;justify-content:center;gap:10px;margin:13px auto 0;width:min(280px,100%)}.art-volume input{flex:1;min-width:0;width:auto;padding:0;border:0;background:transparent;accent-color:var(--accent);cursor:pointer}.art-mute{background:#ffffffb3;border-color:#bac7d580;padding:4px 9px;font-size:12px;min-width:55px}.art-volume span{font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted);min-width:36px;text-align:right}
+.library{transition:opacity .2s ease,transform .2s ease}.player{transition:opacity .2s ease,transform .2s ease}body.art-view-open .library{opacity:0;transform:translateY(10px)}body.art-view-open .player{opacity:0;transform:translateY(12px)}.art-view[open]{animation:art-view-enter .24s ease-out both}.art-view[open].is-closing{animation:art-view-leave .18s ease-in both}.art-options{display:flex;align-items:center;justify-content:center;gap:20px;margin:13px auto 0;flex-wrap:wrap}.art-options .art-volume{margin:0;width:250px}.speed-control{display:flex;align-items:center;justify-content:flex-end;gap:8px;font-size:12px;color:var(--muted);margin-top:7px}.speed-control select{padding:3px 8px;font-size:12px;background:#ffffffb8}.art-options .speed-control{margin:0}.speed-control select{min-width:75px}@keyframes art-view-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes art-view-leave{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(10px)}}@media(prefers-reduced-motion:reduce){.art-view[open],.art-view[open].is-closing{animation:none!important}.library,.player{transition:none!important}}@media(max-width:640px){.art-options{gap:9px}.art-options .art-volume{width:min(240px,100%)}.speed-control{font-size:11px;margin-top:5px}}
+.art-view{overflow:clip}
+.player-options{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-top:8px}.player-options .speed-control{margin:0}.player-volume{display:flex;align-items:center;gap:10px;flex:1;min-width:210px;max-width:450px;color:var(--muted);font-size:12px}.player-volume input[type="range"]{flex:1;min-width:0;padding:0;accent-color:var(--accent);cursor:pointer}.volume-number{display:flex;align-items:center;gap:3px;font-size:12px;color:var(--muted)}.volume-number input[type="number"]{width:76px;padding:3px 5px;font-size:12px;font-variant-numeric:tabular-nums;text-align:right}.art-options .art-volume{flex:1;min-width:300px;max-width:520px;width:520px}.art-volume input[type="number"]{flex:none;width:76px;min-width:76px;padding:3px 5px;border:1px solid var(--line);background:#ffffffb8;cursor:text}.speed-control{cursor:ns-resize}.artwork-notice{display:block;color:#9a4c14;font-size:12px;margin:-5px 0 10px}@media(max-width:640px){.art-options .art-volume{min-width:0;flex-basis:100%;width:100%}.player-options{gap:8px}.player-volume{max-width:none;flex-basis:100%}body.has-player{padding-bottom:225px}}
+.speed-control{display:flex;align-items:center;gap:9px;flex:1;min-width:250px;max-width:520px}.speed-control>label:first-child{white-space:nowrap}.speed-control input[type="range"]{flex:1;min-width:90px;width:150px;padding:0;accent-color:var(--accent);cursor:pointer}.speed-number{display:flex;align-items:center;gap:3px;white-space:nowrap}.speed-number input{width:66px;padding:3px 4px;font-size:12px;text-align:right;font-variant-numeric:tabular-nums}.player-options .player-volume,.player-options .speed-control{flex-basis:100%;max-width:none}.art-options{gap:10px}.art-options .art-volume,.art-options .speed-control{flex-basis:100%;width:100%;max-width:620px}.art-header-actions{display:flex;align-items:center;gap:12px}.art-header-actions>button{font-size:12px;background:#ffffffb8;white-space:nowrap}.actions .edit-cover-button{display:flex;align-items:center;justify-content:center;padding:8px 10px;min-width:106px}.cover-editor{width:min(520px,calc(100vw - 28px));max-height:calc(100dvh - 40px);padding:26px;border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 80px #18233540;color:var(--text);background:var(--surface);overflow:auto}.cover-editor::backdrop{background:#18233588;backdrop-filter:blur(5px)}.cover-editor h2{margin:0;font-size:23px}.cover-editor-track{margin:8px 0;font-weight:600;overflow-wrap:anywhere}.cover-editor-hint{display:block;font-size:12px;color:var(--muted);line-height:1.8}.cover-preview{width:min(210px,100%);aspect-ratio:1;margin:16px auto;display:grid;place-items:center;background:var(--bg);border:1px dashed var(--line);border-radius:12px;overflow:hidden}.cover-preview img{width:100%;height:100%;object-fit:contain}.cover-preview span{font-size:12px;color:var(--muted)}#chooseCover{display:block;margin:0 auto 10px}.cover-save-status{font-size:12px;min-height:20px;margin:12px 0;color:var(--muted)}.cover-save-status.error{color:#b03532}.cover-editor-actions{display:flex;justify-content:flex-end;gap:10px}.cover-editor[aria-busy="true"] .cover-save-status::before{content:"";display:inline-block;width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;margin-right:8px;animation:record-turn .8s linear infinite}body.has-player{padding-bottom:180px}@media(max-width:640px){.art-header-actions{gap:6px;flex-wrap:wrap;justify-content:flex-end}.art-header-actions>button{padding:7px 9px}.art-header{align-items:flex-start}.speed-control{min-width:0}.speed-control input[type="range"]{width:auto;min-width:60px}.cover-editor{padding:20px}.cover-preview{width:min(180px,100%)}body.has-player{padding-bottom:235px}}
+</style>
+</head>
+<body>
+<main class="library">
+  <header class="heading"><div><p class="eyebrow">YOUR MUSIC LIBRARY</p><h1>音楽一覧</h1></div><p id="stats" aria-live="polite"></p></header>
+  <div class="toolbar">
+    <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input id="q" type="search" placeholder="曲名・アルバム名・アーティスト名を検索" aria-label="検索"></div>
+    <select id="field" aria-label="並べ替え項目"><option value="title">曲名</option><option value="album">アルバム名</option><option value="artist">アーティスト名</option><option value="seconds">長さ</option></select>
+    <select id="dir" aria-label="並べ替え順"><option value="1">昇順</option><option value="-1">降順</option></select>
+    <label class="size-label">1ページ <input id="size" type="number" min="1" max="10000" value="100" aria-label="1ページの表示件数"> 曲</label>
+  </div>
+  <p class="hint">列名をクリックしても並べ替えできます。タグのない曲名はファイル名を表示します。「—」は未取得です。再生・ファイルの場所の表示には「MusicLibrary.exe」から一覧を開いてください。</p>
+  <div class="table-wrap"><table><thead><tr><th>ジャケット</th><th><button data-key="title">曲名</button></th><th><button data-key="album">アルバム名</button></th><th><button data-key="artist">アーティスト名</button></th><th><button data-key="seconds">長さ</button></th><th>音源</th></tr></thead><tbody id="rows"></tbody></table></div>
+  <nav class="pages" aria-label="ページ切り替え"><button id="prev">前へ</button><span id="page"></span><button id="next">次へ</button></nav>
+</main>
+<section id="player" class="player" aria-label="音楽プレイヤー" hidden>
+  <button id="openArtwork" class="player-art-button" aria-label="再生中のジャケットを大きく表示" title="ジャケットを大きく表示"><span id="playerArt" class="player-art"><img id="playingCover" alt="" hidden><span id="playingCoverFallback" class="player-art-fallback" aria-label="ジャケット未設定">♪</span></span></button>
+  <div class="track-info"><p class="now-label">NOW PLAYING</p><strong id="playing"></strong><span id="playingMeta"></span><small id="audioStatus" role="status"></small></div>
+  <div class="player-controls"><audio id="audio" controls preload="metadata" aria-label="再生・一時停止・音量・再生位置"></audio><div class="player-options"><div class="player-volume"><span>音量</span><input id="playerVolume" type="range" min="0" max="100" step="0.1" value="100" aria-label="一覧の音量"><label class="volume-number"><input id="playerVolumeNumber" type="number" min="0" max="100" step="0.1" value="100.0" aria-label="一覧の音量の数値">%</label></div><div class="speed-control" title="ホイールで0.05倍ずつ変更（上で速く・下で遅く）"><label for="playbackSpeed">再生速度</label><input id="playbackSpeed" type="range" min="0.5" max="2" step="0.05" value="1" aria-label="一覧の再生速度"><label class="speed-number"><input id="playbackSpeedNumber" type="number" min="0.5" max="2" step="0.05" value="1.00" aria-label="一覧の再生速度の数値">×</label></div></div></div>
+</section>
+<dialog id="artView" class="art-view" aria-labelledby="artTitle">
+  <img id="artBackdrop" class="art-backdrop" alt="" aria-hidden="true" hidden>
+  <header class="art-header"><button id="closeArtwork" class="art-back">← 音楽一覧に戻る</button><div class="art-header-actions"><button id="editCurrentCover" type="button">ジャケットを設定</button><div class="art-shape-controls" role="group" aria-label="ジャケットの表示方法"><button type="button" data-art-shape="cd" aria-pressed="true">CD</button><button type="button" data-art-shape="square" aria-pressed="false">ジャケット</button></div></div></header>
+  <div class="art-body"><div id="largeArt" class="large-art"><img id="largeCover" alt="" hidden><span id="largeCoverFallback" class="large-art-fallback" aria-label="ジャケット未設定">♪</span></div></div>
+  <footer class="art-footer"><h2 id="artTitle" class="art-title"></h2><p id="artMeta" class="art-meta"></p><small id="artworkNotice" class="artwork-notice" role="status" hidden></small><div class="art-transport"><button id="artTogglePlay" class="art-toggle" aria-label="再生を再開">再生する</button><input id="artSeek" class="art-seek" type="range" min="0" max="0" step="0.1" value="0" disabled aria-label="大きいジャケット画面の再生位置"><span id="artTime" class="art-time">0:00 / 0:00</span></div><div class="art-options"><div class="art-volume"><button id="artMute" class="art-mute" aria-label="ミュートする" aria-pressed="false">音量</button><input id="artVolume" type="range" min="0" max="100" step="0.1" value="100" aria-label="音量"><label class="volume-number"><input id="artVolumeNumber" type="number" min="0" max="100" step="0.1" value="100.0" aria-label="音量の数値">%</label></div><div class="speed-control" title="ホイールで0.05倍ずつ変更（上で速く・下で遅く）"><label for="artSpeed">再生速度</label><input id="artSpeed" type="range" min="0.5" max="2" step="0.05" value="1" aria-label="ジャケット画面の再生速度"><label class="speed-number"><input id="artSpeedNumber" type="number" min="0.5" max="2" step="0.05" value="1.00" aria-label="ジャケット画面の再生速度の数値">×</label></div></div><small id="artStatus" class="art-status" role="status"></small></footer>
+</dialog>
+<dialog id="coverEditor" class="cover-editor" aria-labelledby="coverEditorTitle">
+  <h2 id="coverEditorTitle">ジャケットを設定</h2><p id="coverEditorTrack" class="cover-editor-track"></p>
+  <p class="cover-editor-hint">この曲の音源ファイルに画像を埋め込みます。保存前の音源は自動でバックアップします。</p>
+  <div class="cover-preview"><img id="coverPreview" alt="選択したジャケット" hidden><span id="coverPreviewEmpty">画像を選んでください</span></div>
+  <input id="coverFile" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" hidden>
+  <button id="chooseCover" type="button">画像を選択（JPEG / PNG）</button>
+  <small class="cover-editor-hint">10MB以下。大きい画像は長辺1600pxまでに調整します。設定はこの1曲に適用されます。</small>
+  <p id="coverSaveStatus" class="cover-save-status" role="status"></p>
+  <div class="cover-editor-actions"><button id="cancelCover" type="button">閉じる</button><button id="saveCover" class="art-toggle" type="button" disabled>音源に保存</button></div>
+</dialog>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const data=JSON.parse(document.getElementById('data').textContent);
+const collator=new Intl.Collator('ja',{numeric:true,sensitivity:'base'});
+const token="__TOKEN__",$=id=>document.getElementById(id);
+let page=0,size=100,currentId=null,currentTrack=null,playRequest=0,artReturnFocus=null,artworkVersion=null,artCloseTimer=null;
+const labels={title:'曲名',album:'アルバム名',artist:'アーティスト名',seconds:'長さ'};
+function filtered(){
+  const q=$('q').value.trim().toLocaleLowerCase(),key=$('field').value,dir=Number($('dir').value);
+  const list=data.filter(r=>[r.title,r.album,r.artist].some(x=>(x||'').toLocaleLowerCase().includes(q)));
+  list.sort((a,b)=>{const x=a[key],y=b[key],xm=x===null||x==='',ym=y===null||y==='';if(xm||ym)return xm===ym?collator.compare(a.path,b.path):xm?1:-1;const c=key==='seconds'?x-y:collator.compare(x,y);return c*dir||collator.compare(a.path,b.path)});
+  return list;
+}
+function coverPlaceholder(){const el=document.createElement('span');el.className='nocover';el.textContent='♪';el.title='ジャケット未設定';return el}
+function markCurrent(){document.querySelectorAll('#rows tr[data-track-id]').forEach(tr=>tr.classList.toggle('is-current',Number(tr.dataset.trackId)===currentId))}
+function render(){
+  size=Math.max(1,Math.min(10000,Math.floor(Number($('size').value)||100)));$('size').value=String(size);
+  const list=filtered(),pages=Math.max(1,Math.ceil(list.length/size));page=Math.min(page,pages-1);
+  const fragment=document.createDocumentFragment();
+  for(const r of list.slice(page*size,(page+1)*size)){
+    const tr=document.createElement('tr'),covercell=document.createElement('td');tr.dataset.trackId=String(r.id);
+    const coverButton=document.createElement('button');coverButton.className='cover-button';coverButton.setAttribute('aria-label',`${r.title}のジャケットを大きく表示`);coverButton.title='ジャケットを大きく表示';coverButton.onclick=()=>openArtwork(r);
+    if(r.cover){const img=document.createElement('img');img.className='cover';img.src=r.cover;img.alt=r.album?`${r.album}のジャケット`:'ジャケット';img.loading='lazy';img.onerror=()=>img.replaceWith(coverPlaceholder());coverButton.append(img)}else coverButton.append(coverPlaceholder());covercell.append(coverButton);
+    tr.append(covercell);
+    for(const v of [r.title,r.album,r.artist,r.length]){const td=document.createElement('td');td.textContent=v||'—';tr.append(td)}
+    tr.children[1].title=r.title_from_filename?'曲名タグがないためファイル名を表示':'';
+    const td=document.createElement('td'),actions=document.createElement('div'),play=document.createElement('button');actions.className='actions';
+    play.className='play-button';play.textContent='再生する';play.title='この画面で音源を再生';play.setAttribute('aria-label',`${r.title}を再生する`);play.onclick=()=>playTrack(r);actions.append(play);
+    const reveal=document.createElement('button');reveal.className='reveal-button';reveal.textContent='場所を開く';reveal.title='エクスプローラーでこのファイルを選択';
+    reveal.onclick=async()=>{reveal.disabled=true;try{const response=await fetch(location.protocol==='http:'?'/reveal':'http://127.0.0.1:8765/reveal',{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({id:r.id,path:r.path,token})});if(!response.ok)throw Error()}catch(e){alert('「MusicLibrary.exe」を起動して、その画面で操作してください。')}finally{reveal.disabled=false}};
+    actions.append(reveal);const edit=document.createElement('button');edit.className='edit-cover-button';edit.title='ジャケットを設定';edit.setAttribute('aria-label',`${r.title}のジャケットを設定`);edit.textContent='ジャケットを設定';edit.onclick=()=>openCoverEditor(r);actions.append(edit);td.append(actions);tr.append(td);fragment.append(tr);
+  }
+  if(!list.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.className='empty';td.textContent='検索に一致する楽曲がありません。';tr.append(td);fragment.append(tr)}
+  $('rows').replaceChildren(fragment);markCurrent();
+  $('stats').textContent=`全 ${data.length.toLocaleString()} 曲 ／ 検索結果 ${list.length.toLocaleString()} 曲`;
+  $('page').textContent=`${page+1} / ${pages}`;$('prev').disabled=page===0;$('next').disabled=page>=pages-1;
+  document.querySelectorAll('[data-key]').forEach(b=>{const active=$('field').value===b.dataset.key;b.textContent=labels[b.dataset.key]+(active?(Number($('dir').value)===1?' ▲':' ▼'):'');b.closest('th').setAttribute('aria-sort',active?(Number($('dir').value)===1?'ascending':'descending'):'none')});
+}
+function status(message,error=false){for(const id of ['audioStatus','artStatus']){$(id).textContent=message;$(id).classList.toggle('error',error)}}
+function stopRotation(){for(const id of ['player','artView'])$(id).classList.remove('is-playing');updateArtworkControls()}
+function artworkNotice(message=''){$('artworkNotice').textContent=message;$('artworkNotice').hidden=!message}
+function setArtwork(r){
+  artworkNotice();
+  $('artTitle').textContent=r.title;$('artTitle').title=r.title;$('artMeta').textContent=[r.artist||'アーティスト未設定',r.album].filter(Boolean).join(' ／ ');
+  $('artBackdrop').hidden=true;$('artBackdrop').removeAttribute('src');
+  for(const [imageId,artId,fallbackId] of [['playingCover','playerArt','playingCoverFallback'],['largeCover','largeArt','largeCoverFallback']]){
+    const img=$(imageId),art=$(artId),fallback=$(fallbackId);
+    art.classList.remove('has-cover');img.hidden=true;fallback.hidden=false;img.dataset.fullArtwork='false';img.removeAttribute('src');
+    img.onload=()=>{if(currentId!==r.id)return;img.hidden=false;fallback.hidden=true;art.classList.add('has-cover');if(imageId==='largeCover'){if(img.dataset.fullArtwork==='true')artworkNotice();$('artBackdrop').src=r.cover;$('artBackdrop').hidden=false}};
+    img.onerror=()=>{if(imageId==='largeCover'&&img.dataset.fullArtwork==='true'){artworkNotice('元のジャケット画像を取得できないため、低解像度で表示しています。「MusicLibrary.exe」から開き直してください。');img.dataset.fullArtwork='false';img.src=r.cover;return}img.hidden=true;fallback.hidden=false;art.classList.remove('has-cover');if(imageId==='largeCover')$('artBackdrop').hidden=true};
+    if(r.cover){img.alt=(r.album||r.title)+'のジャケット';img.src=r.cover}
+  }
+}
+function loadFullArtwork(r){if(!r.cover)return;if(location.protocol!=='http:'||(artworkVersion!==null&&artworkVersion<4)){artworkNotice('古い補助プログラムではジャケットが低解像度になります。「MusicLibrary.exe」から開き直してください。');return}if(artworkVersion===null)return;const img=$('largeCover');img.dataset.fullArtwork='true';img.src='/artwork/'+r.id+'?token='+encodeURIComponent(token)+'&path='+encodeURIComponent(r.path)}
+function formatTime(value){const t=Math.max(0,Math.floor(Number.isFinite(value)?value:0));return t>=3600?`${Math.floor(t/3600)}:${String(Math.floor(t/60)%60).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`:`${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`}
+function updateArtworkControls(){
+  const audio=$('audio'),duration=Number.isFinite(audio.duration)?audio.duration:0,isPaused=audio.paused||audio.ended;
+  $('artTogglePlay').textContent=isPaused?'再生する':'一時停止';$('artTogglePlay').setAttribute('aria-label',isPaused?'再生を再開':'再生を一時停止');
+  $('artSeek').max=String(duration);$('artSeek').disabled=duration<=0;$('artSeek').value=String(Math.min(audio.currentTime||0,duration));$('artSeek').setAttribute('aria-valuetext',`${formatTime(audio.currentTime)} / ${formatTime(duration)}`);$('artTime').textContent=`${formatTime(audio.currentTime)} / ${formatTime(duration)}`;
+  const volume=(audio.muted?0:Math.round(audio.volume*1000)/10).toFixed(1);for(const id of ['artVolume','playerVolume']){$(id).value=volume;$(id).setAttribute('aria-valuetext',volume+'%')}for(const id of ['artVolumeNumber','playerVolumeNumber']){if(document.activeElement!==$(id))$(id).value=volume}$('artMute').setAttribute('aria-pressed',String(audio.muted));$('artMute').setAttribute('aria-label',audio.muted?'ミュートを解除':'ミュートする');$('artMute').textContent=audio.muted?'消音中':'音量';
+}
+function setArtworkShape(shape){const selected=shape==='square'?'square':'cd';document.body.dataset.artShape=selected;document.querySelectorAll('[data-art-shape]').forEach(button=>{if(button.tagName==='BUTTON')button.setAttribute('aria-pressed',String(button.dataset.artShape===selected))});try{localStorage.setItem('music-library-artwork-shape',selected)}catch(e){}}
+function openArtwork(r){
+  clearTimeout(artCloseTimer);$('artView').classList.remove('is-closing');
+  artReturnFocus=document.activeElement;
+  if(r&&(!currentTrack||r.id!==currentId))playTrack(r);
+  if(!currentTrack)return;
+  updateArtworkControls();if(!$('artView').open)$('artView').showModal();$('artView').scrollTop=0;document.body.classList.add('art-view-open');loadFullArtwork(currentTrack);$('closeArtwork').focus({preventScroll:true});
+}
+$('openArtwork').onclick=()=>openArtwork(currentTrack);
+function finishArtworkClose(){clearTimeout(artCloseTimer);$('artView').classList.remove('is-closing');if($('artView').open)$('artView').close()}
+function closeArtwork(){if(!$('artView').open||$('artView').classList.contains('is-closing'))return;if(matchMedia('(prefers-reduced-motion:reduce)').matches){finishArtworkClose();return}$('artView').classList.add('is-closing');artCloseTimer=setTimeout(finishArtworkClose,350)}
+$('closeArtwork').onclick=closeArtwork;
+$('artView').addEventListener('cancel',event=>{event.preventDefault();closeArtwork()});
+$('artView').addEventListener('animationend',event=>{if(event.target===$('artView')&&event.animationName==='art-view-leave')finishArtworkClose()});
+$('artView').addEventListener('close',()=>{clearTimeout(artCloseTimer);$('artView').classList.remove('is-closing');document.body.classList.remove('art-view-open');if(artReturnFocus?.isConnected)artReturnFocus.focus({preventScroll:true})});
+document.querySelectorAll('button[data-art-shape]').forEach(button=>button.onclick=()=>setArtworkShape(button.dataset.artShape));
+let savedShape='cd';try{savedShape=localStorage.getItem('music-library-artwork-shape')||'cd'}catch(e){}setArtworkShape(savedShape);
+$('artTogglePlay').onclick=async()=>{const audio=$('audio');if(audio.paused||audio.ended){try{await audio.play()}catch(e){if(e.name!=='AbortError')status('音源を再生できません。「MusicLibrary.exe」から開き直してください。',true)}}else audio.pause()};
+$('artSeek').addEventListener('input',()=>{if(Number.isFinite($('audio').duration)){$('audio').currentTime=Number($('artSeek').value);updateArtworkControls()}});
+function setVolume(value){const volume=Number(value);if(!Number.isFinite(volume))return;const audio=$('audio');audio.volume=Math.round(Math.max(0,Math.min(100,volume))*10)/1000;audio.muted=false;updateArtworkControls()}
+for(const id of ['artVolume','playerVolume'])$(id).addEventListener('input',event=>setVolume(event.target.value));
+for(const id of ['artVolumeNumber','playerVolumeNumber']){$(id).addEventListener('input',event=>{if(event.target.value!==''&&event.target.validity.valid)setVolume(event.target.value)});$(id).addEventListener('change',event=>{if(event.target.value!==''&&event.target.validity.valid)setVolume(event.target.value);event.target.value=($('audio').muted?0:$('audio').volume*100).toFixed(1)})}
+$('artMute').onclick=()=>{const audio=$('audio');audio.muted=!audio.muted;updateArtworkControls()};
+for(const event of ['loadedmetadata','durationchange','timeupdate','seeked','play','volumechange'])$('audio').addEventListener(event,updateArtworkControls);
+function syncPlaybackSpeed(){const rate=$('audio').playbackRate;for(const id of ['playbackSpeed','artSpeed']){const slider=$(id);slider.min=String(Math.min(.5,rate));slider.max=String(Math.max(2,rate));slider.value=String(rate);slider.setAttribute('aria-valuetext',rate.toFixed(2)+'倍')}for(const id of ['playbackSpeedNumber','artSpeedNumber']){const number=$(id);number.min=String(Math.min(.5,rate));number.max=String(Math.max(2,rate));if(document.activeElement!==number)number.value=rate.toFixed(2)}try{localStorage.setItem('music-library-playback-rate',String(rate))}catch(e){}}
+function setPlaybackSpeed(value){const rate=Number(value);if(!Number.isFinite(rate)||rate<.25||rate>4)return;$('audio').defaultPlaybackRate=rate;$('audio').playbackRate=rate;$('audio').preservesPitch=true;syncPlaybackSpeed()}
+for(const id of ['playbackSpeed','artSpeed']){
+  const select=$(id);select.addEventListener('input',event=>setPlaybackSpeed(event.target.value));
+  let wheelDelta=0;
+  select.closest('.speed-control').addEventListener('wheel',event=>{
+    if(event.ctrlKey||event.metaKey||!event.deltaY)return;
+    event.preventDefault();
+    const delta=event.deltaY*(event.deltaMode===1?40:event.deltaMode===2?400:1);
+    if(Math.sign(delta)!==Math.sign(wheelDelta))wheelDelta=0;
+    wheelDelta+=delta;if(Math.abs(wheelDelta)<40)return;
+    setPlaybackSpeed(Math.max(.5,Math.min(2,Math.round(($('audio').playbackRate+(wheelDelta<0?.05:-.05))*100)/100)));wheelDelta=0;
+  },{passive:false});
+}
+for(const id of ['playbackSpeedNumber','artSpeedNumber']){$(id).addEventListener('input',event=>{if(event.target.value!==''&&event.target.validity.valid)setPlaybackSpeed(event.target.value)});$(id).addEventListener('change',event=>{if(event.target.value!==''&&event.target.validity.valid)setPlaybackSpeed(event.target.value);event.target.value=$('audio').playbackRate.toFixed(2)})}
+$('audio').addEventListener('ratechange',syncPlaybackSpeed);
+let savedSpeed=1;try{savedSpeed=Number(localStorage.getItem('music-library-playback-rate'))||1}catch(e){}setPlaybackSpeed(savedSpeed);
+async function playTrack(r){
+  const request=++playRequest,audio=$('audio');
+  audio.pause();audio.removeAttribute('src');audio.load();stopRotation();
+  currentId=r.id;currentTrack=r;markCurrent();$('player').hidden=false;document.body.classList.add('has-player');
+  $('playing').textContent=r.title;$('playing').title=r.title;$('playingMeta').textContent=[r.artist||'アーティスト未設定',r.album].filter(Boolean).join(' ／ ');setArtwork(r);status('読み込み中…');
+  if(location.protocol==='http:'){
+    try{const response=await fetch('/instance',{cache:'no-store'});if(!response.ok)throw Error();const instance=await response.json();if(request!==playRequest)return;artworkVersion=instance.version;if($('artView').open)loadFullArtwork(r);if(instance.version<3){status('古い補助プログラムが起動しています。「MusicLibrary.exe」を再実行してください。',true);return}}
+    catch(e){if(request===playRequest)status('補助プログラムを確認できません。「MusicLibrary.exe」を再実行してください。',true);return}
+  }
+  if(request!==playRequest)return;
+  audio.src=location.protocol==='http:'?'/audio/'+r.id+'?token='+encodeURIComponent(token)+'&path='+encodeURIComponent(r.path):r.uri;audio.load();
+  try{await audio.play()}catch(e){if(request===playRequest&&e.name!=='AbortError')status('再生ボタンを押してください。再生できない場合は「MusicLibrary.exe」から開き直してください。',true)}
+}
+$('audio').addEventListener('playing',()=>{for(const id of ['player','artView'])$(id).classList.add('is-playing');updateArtworkControls();status('再生中')});
+$('audio').addEventListener('pause',()=>{stopRotation();if($('audio').currentSrc&&!$('audio').ended)status('一時停止')});
+$('audio').addEventListener('ended',()=>{stopRotation();status('再生終了')});
+$('audio').addEventListener('waiting',()=>{stopRotation();status('読み込み中…')});
+$('audio').addEventListener('emptied',stopRotation);
+$('audio').addEventListener('error',()=>{stopRotation();status('音源を再生できません。「MusicLibrary.exe」から開いているか、ファイルが存在するかを確認してください。',true)});
+for(const id of ['q','field','dir','size'])$(id).addEventListener(id==='q'?'input':'change',()=>{page=0;render()});
+document.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{if($('field').value===b.dataset.key)$('dir').value=String(-Number($('dir').value));else{$('field').value=b.dataset.key;$('dir').value='1'}page=0;render()});
+
+let coverTarget=null,coverFile=null,coverObjectUrl=null,coverSaving=false,coverEditorFocus=null;
+function coverMessage(message,error=false){$('coverSaveStatus').textContent=message;$('coverSaveStatus').classList.toggle('error',error)}
+function releaseCoverPreview(){if(coverObjectUrl){URL.revokeObjectURL(coverObjectUrl);coverObjectUrl=null}}
+async function openCoverEditor(r){
+  coverTarget=r;coverFile=null;releaseCoverPreview();coverEditorFocus=document.activeElement;
+  $('coverEditorTrack').textContent=[r.title,r.artist].filter(Boolean).join(' ／ ');$('coverFile').value='';$('saveCover').disabled=true;$('chooseCover').disabled=true;coverMessage('補助プログラムを確認しています…');
+  $('coverPreview').hidden=!r.cover;$('coverPreviewEmpty').hidden=!!r.cover;if(r.cover)$('coverPreview').src=r.cover;else $('coverPreview').removeAttribute('src');
+  $('coverEditor').showModal();
+  try{const response=await fetch('/instance',{cache:'no-store'});if(!response.ok)throw Error();const instance=await response.json();if(instance.version<5)throw Error();if(r.cover)$('coverPreview').src='/artwork/'+r.id+'?token='+encodeURIComponent(token)+'&path='+encodeURIComponent(r.path);$('chooseCover').disabled=false;coverMessage('保存しても音声の再圧縮は行いません。')}
+  catch(e){coverMessage('ジャケットの設定には新版の補助プログラムが必要です。「MusicLibrary.exe」から開き直してください。',true)}
+}
+$('editCurrentCover').onclick=()=>{if(currentTrack)openCoverEditor(currentTrack)};
+$('chooseCover').onclick=()=>$('coverFile').click();
+$('coverFile').onchange=()=>{
+  const file=$('coverFile').files[0];coverFile=null;$('saveCover').disabled=true;releaseCoverPreview();if(!file)return;
+  if(file.size>10*1024*1024||!['image/jpeg','image/png'].includes(file.type)){coverMessage('10MB以下のJPEGまたはPNG画像を選んでください。',true);return}
+  coverFile=file;coverObjectUrl=URL.createObjectURL(file);$('coverPreview').src=coverObjectUrl;$('coverPreview').hidden=false;$('coverPreviewEmpty').hidden=true;$('saveCover').disabled=false;coverMessage(file.name+' を音源に埋め込みます。');
+};
+$('coverPreview').onerror=()=>{if(coverFile){coverFile=null;$('saveCover').disabled=true;coverMessage('画像を表示できません。別のJPEGまたはPNGを選んでください。',true)}};
+function closeCoverEditor(){if(!coverSaving)$('coverEditor').close()}
+$('cancelCover').onclick=closeCoverEditor;
+$('coverEditor').addEventListener('cancel',event=>{if(coverSaving)event.preventDefault()});
+$('coverEditor').addEventListener('close',()=>{releaseCoverPreview();if(coverEditorFocus?.isConnected)coverEditorFocus.focus({preventScroll:true})});
+function encodeCoverFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=reject;reader.readAsDataURL(file)})}
+$('saveCover').onclick=async()=>{
+  if(!coverTarget||!coverFile||coverSaving)return;
+  const track=coverTarget,audio=$('audio'),active=currentId===track.id&&!!audio.currentSrc,resume=active&&!audio.paused,time=active?audio.currentTime:0;
+  coverSaving=true;$('coverEditor').setAttribute('aria-busy','true');for(const id of ['saveCover','cancelCover','chooseCover'])$(id).disabled=true;coverMessage('画像を確認し、バックアップと音声データの検証を行っています…');
+  if(active){audio.pause();audio.removeAttribute('src');audio.load()}
+  let revision=Date.now();
+  try{
+    const image=await encodeCoverFile(coverFile),response=await fetch('/artwork',{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({token,id:track.id,path:track.path,image})});
+    const result=await response.json();if(!response.ok||!result.ok)throw Error(result.error||'保存できませんでした。');
+    revision=result.revision;track.cover=result.cover;render();if(currentId===track.id){setArtwork(track);if($('artView').open)loadFullArtwork(track)}
+    coverFile=null;coverMessage(result.refresh_warning||'保存しました。一覧と音源ファイルの両方に反映されました。保存前の音源は artwork-backups に保管しています。');
+  }catch(error){coverMessage(error.message||'保存できませんでした。',true)}
+  finally{
+    if(active&&currentId===track.id){audio.addEventListener('loadedmetadata',()=>{audio.currentTime=Math.min(time,Number.isFinite(audio.duration)?audio.duration:time);if(resume)audio.play().catch(()=>status('再生ボタンを押してください。'))},{once:true});audio.src='/audio/'+track.id+'?token='+encodeURIComponent(token)+'&path='+encodeURIComponent(track.path)+'&v='+revision;audio.load()}
+    coverSaving=false;$('coverEditor').removeAttribute('aria-busy');$('cancelCover').disabled=false;$('chooseCover').disabled=false;$('saveCover').disabled=!coverFile;
+  }
+};
+
+$('prev').onclick=()=>{page--;render()};$('next').onclick=()=>{page++;render()};render();
+</script>
+</body>
+</html>

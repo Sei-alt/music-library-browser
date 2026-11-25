@@ -1,0 +1,13 @@
+音楽ライブラリをインストールします。
+
+・Windows 10 / 11（64ビット）に対応します。管理者権限は不要です。
+・Python は同梱しています。
+・画面表示には Microsoft Edge WebView2 Runtime が必要です。
+  未導入の場合は Microsoft 公式サイトから Evergreen Runtime を導入してください。
+  https://developer.microsoft.com/microsoft-edge/webview2/
+・音源の読み取りとジャケット設定には FFmpeg / ffprobe が必要です。
+  導入済みのものを利用します。未導入の場合は https://ffmpeg.org/download.html から入手し、
+  PATH に登録するか、インストール先の tools フォルダーに ffmpeg.exe / ffprobe.exe を置いてください。
+
+音源フォルダーは起動後に選択します。
+アンインストールしても、音源・ライブラリの保存データ・ジャケット設定前のバックアップは保持します。
